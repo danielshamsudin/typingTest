@@ -37,7 +37,7 @@ jobs:
       - name: build exec
         uses: Nuitka/Nuitka-Action@v0.4
         with:
-          script-name: kasa_cli
+          script-name: main.py
           onefile: true
           
       - name: upload artifacts

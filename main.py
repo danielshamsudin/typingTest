@@ -1,3 +1,5 @@
+from cgitb import text
+from typing import Text
 import numpy as np
 import tkinter as tk
 import random
@@ -6,6 +8,7 @@ import threading
 import pandas as pd
 import os
 import matplotlib
+import requests
 
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -138,8 +141,12 @@ root = tk.Tk()
 root.title("test")
 root.geometry("1200x600")
 
-
-text = open("text.txt", "r").read().split("\n")
+t = requests.get(
+    "https://gist.githubusercontent.com/danielshamsudin/e43474c3f65cf1190cec590d2baef1e3/raw/7cabb57ace9a5204fa3d086fb807d4e8d09df660/text.txt"
+)
+text = t.text
+text = text.split("\n")
+# text = open("text.txt", "r").read().split("\n")
 frame = tk.Frame(root)
 
 sample_label = tk.Label(frame, text=rtext(text), font=("Helvetica", 24))

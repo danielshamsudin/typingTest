@@ -35,4 +35,6 @@ jobs:
       - name: Compile and build main.py
         run: |
           python -m nuitka main.py
-          mv main.build main
+          rm -rf main.build
+          mkdir dist
+          mv main.bin dist/main

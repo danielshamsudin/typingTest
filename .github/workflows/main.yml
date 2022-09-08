@@ -17,10 +17,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        
+    
     runs-on: ubuntu-latest
     
     steps:
@@ -38,11 +35,10 @@ jobs:
         uses: Nuitka/Nuitka-Action@v0.4
         with:
           script-name: main.py
-          onefile: true
+          onefile: false
           
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
-          path: |
-            build/*.bin
+          path: build/*.bin

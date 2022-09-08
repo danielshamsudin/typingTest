@@ -1,5 +1,3 @@
-from cgitb import text
-from typing import Text
 import numpy as np
 import tkinter as tk
 import random

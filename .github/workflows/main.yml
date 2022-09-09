@@ -34,6 +34,7 @@ jobs:
         with:
           script-name: main.py
           onefile: false
+        run: ls
           
       - name: Create Release
         id: create_release
@@ -45,6 +46,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+        run: ls
 
       - name: upload release artifacts
         id: upload-release-asset

@@ -27,20 +27,13 @@ jobs:
         with:
           python-version: '3.8.10'
           architecture: 'x64'
-          cache: 'pip'
-          cache-dependency-path: |
-            **/requirements*.txt
-
-      - name: install py reqs
-        run: |
-          pip install -r requirements.txt         
 
       - name: build exec
         uses: Nuitka/Nuitka-Action@v0.4
         with:
           script-name: main.py 
-          onefile: false
-          
+          onefile: true
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

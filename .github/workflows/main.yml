@@ -28,6 +28,9 @@ jobs:
           python-version: '3.8.10'
           architecture: 'x64'
 
+      - name: install wheel
+        run: pip install wheel
+
       - name: build exec
         uses: Nuitka/Nuitka-Action@v0.4
         with:

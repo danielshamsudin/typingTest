@@ -15,11 +15,8 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout repository
@@ -43,9 +40,6 @@ jobs:
         with:
           script-name: main.py 
           onefile: false
-          enable-plugins: |
-            numpy
-            tk-inter
           
       - name: Create Release
         id: create_release
@@ -70,6 +64,5 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: |
             ./main
-            ./main.exe
-          asset_name: typingTest
+          asset_name: main
           asset_content_type: application/bin

@@ -43,7 +43,7 @@ jobs:
         with:
           script-name: main.py 
           onefile: false
-          enable-plugin: |
+          enable-plugins: |
             numpy
             tk-inter
           

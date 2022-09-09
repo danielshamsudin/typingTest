@@ -41,8 +41,11 @@ jobs:
       - name: build exec
         uses: Nuitka/Nuitka-Action@v0.4
         with:
-          script-name: main.py --enable-plugin=numpy --enable-plugin=tk-inter
+          script-name: main.py 
           onefile: false
+          enable-plugin: |
+            numpy
+            tk-inter
           
       - name: Create Release
         id: create_release

@@ -53,6 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.create_release.outputs.release_name }} 
+          asset_path: ./main.bin 
           asset_name: main.bin
           asset_content_type: application/bin

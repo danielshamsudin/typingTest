@@ -36,8 +36,8 @@ jobs:
 
       - name: install py reqs
         run: |
-          pip install -r requirements.txt -r requirements-dev.txt
-          
+          pip install -r requirements.txt         
+
       - name: build exec
         uses: Nuitka/Nuitka-Action@v0.4
         with:

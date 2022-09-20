@@ -61,3 +61,4 @@ jobs:
           asset_path: |
             ./main
           asset_name: main
+          asset_content_type: application/bin

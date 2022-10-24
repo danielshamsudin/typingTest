@@ -47,6 +47,7 @@ jobs:
           release_name: ${{ runner.os }} Build
           draft: false
           prerelease: false
+          allowUpdates: true
 
       - name: upload release artifacts
         id: upload-release-asset

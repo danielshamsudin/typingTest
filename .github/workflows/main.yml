@@ -58,8 +58,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ needs.create_release.outputs.tag_name }}
+          tag_name: ${{ needs.create_release.outputs.tag-name }}
           files: release_${{ matrix.release_suffix }}
-        run: echo ${{ tag_name }}
-
-        

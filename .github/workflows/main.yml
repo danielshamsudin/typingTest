@@ -60,5 +60,6 @@ jobs:
         with:
           tag_name: ${{ needs.create_release.outputs.tag_name }}
           files: release_${{ matrix.release_suffix }}
+        run: echo ${{ tag_name }}
 
         

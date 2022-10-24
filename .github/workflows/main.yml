@@ -1,63 +1,61 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Production Linux Binary
-
-# Controls when the workflow will run
+name: Production
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
-  build:
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          draft: false
+          prelease: false
+          generate_release_notes: false
+
+  build_release:
+    name: Build Release
+    needs: create_release
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
-
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            release_suffix: ubuntu
+          - os: windows-latest
+            release_suffix: windows.exe
     runs-on: ${{ matrix.os }} 
-    
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v3
-        
-      - name: setup python deps
+
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10.0'
           architecture: 'x64'
 
-      - name: install wheel
-        run: pip install wheel pyinstaller
+      - name: Install PyInstaller
+        run: pip install pyinstaller
 
-      - name: build exec
+      - name: Run Linux
+        if: matrix.os == 'ubuntu-latest'
         run: pyinstaller main.py
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }} 
-          release_name: ${{ runner.os }} Build
-          draft: false
-          prerelease: false
-          allowUpdates: true
+      - name: Run Windows
+        if: matrix.os == 'windows-latest'
+        run: pyinstaller main.py
 
-      - name: upload release artifacts
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: |
-            ./main
-          asset_name: typingTest_x64
-          asset_content_type: | 
-            application/bin
+          tag_name: ${{ needs.create_release.outputs.tag-name }}
+          files: release_${{ matrix.release_suffix }}
+
+        

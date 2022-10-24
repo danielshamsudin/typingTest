@@ -29,13 +29,10 @@ jobs:
           architecture: 'x64'
 
       - name: install wheel
-        run: pip install wheel
+        run: pip install wheel pyinstaller
 
       - name: build exec
-        uses: Nuitka/Nuitka-Action@v0.4
-        with:
-          script-name: main.py 
-          onefile: true
+        run: pyinstaller main.py
 
       - name: Create Release
         id: create_release

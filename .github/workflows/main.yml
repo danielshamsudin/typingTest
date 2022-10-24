@@ -60,4 +60,3 @@ jobs:
           asset_name: typingTest_x64
           asset_content_type: | 
             application/bin
-            # application/.exe

@@ -37,19 +37,21 @@ jobs:
       - name: build exec
         run: pyinstaller main.py
 
+      - name: Get tag name from ref
+        shell: bash
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+        id: get_tag
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $ {{ github.ref runner.os }} 
+          tag_name: $ {{ steps.get_tag.outputs.tag }} 
           release_name: ${{ runner.os }} Build
           draft: false
           prerelease: false
-
-      - name: view dir
-        run: ls
 
       - name: upload release artifacts
         id: upload-release-asset
